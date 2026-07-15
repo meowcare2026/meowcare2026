@@ -1,4 +1,4 @@
-from app.config.supabase import supabase
+from app.config.supabase import supabase, supabase_admin
 
 
 class DiagnosisRepository:
@@ -73,6 +73,22 @@ class DiagnosisRepository:
             supabase.table("diagnosis_details")
             .select("*")
             .eq("diagnosis_id", id)
+            .execute()
+        )
+
+        return response.data
+    
+    @staticmethod
+    def get_by_id(diagnosis_id: str):
+        response = (
+            supabase_admin
+            .table("diagnoses")
+            .select("""
+                *,
+                diseases(*)
+            """)
+            .eq("id", diagnosis_id)
+            .single()
             .execute()
         )
 

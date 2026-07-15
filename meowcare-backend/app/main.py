@@ -31,6 +31,13 @@ from app.routers.admin_log_router import (
 from app.routers.diagnosis_router import (
     router as diagnosis_router
 )
+from app.routers.public_disease_router import (
+    router as public_disease_router,
+)
+
+from app.routers.public_symptom_router import (
+    router as public_symptom_router,
+)
 from app.routers.auth_router import router as auth_router
 from app.utils.response import error_response, success_response
 
@@ -163,6 +170,16 @@ app.include_router(
     diagnosis_router,
     prefix=settings.api_v1_prefix,
 )
+
+app.include_router(
+    public_disease_router,
+    prefix=settings.api_v1_prefix,
+)
+
+app.include_router(
+    public_symptom_router,
+    prefix=settings.api_v1_prefix,
+)
 # ============================================================
 # ROOT ENDPOINT
 # ============================================================
@@ -223,4 +240,3 @@ async def health_check():
         message="MeowCare API is running",
         data=application_data,
     )
->>>>>>> origin/feature/admin-knowledge-base

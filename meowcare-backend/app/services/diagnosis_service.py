@@ -3,6 +3,7 @@ from app.repositories.disease_repository import DiseaseRepository
 from app.repositories.rule_repository import RuleRepository
 from app.repositories.symptom_repository import SymptomRepository
 from app.services.certainty_factor_service import CertaintyFactorService
+from app.services.pdf_service import PdfService
 
 
 class DiagnosisService:
@@ -105,3 +106,17 @@ class DiagnosisService:
             "details": details,
             "results": results
         }
+    
+    @staticmethod
+    def generate_pdf(diagnosis_id):
+
+        diagnosis = DiagnosisRepository.get_by_id(
+            diagnosis_id
+        )
+
+        if diagnosis is None:
+            raise NotFoundException(
+                "Diagnosis tidak ditemukan"
+            )
+
+        return PdfService.generate(diagnosis)
